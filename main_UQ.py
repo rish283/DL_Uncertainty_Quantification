@@ -155,18 +155,6 @@ sm1, mm1 = uncq.mcdrop(model, dpr1, itr, datx, n_classes) #### MONTE CARLO DROPO
 sm2, mm2 = uncq.mcdrop_ll(model, dpr2, itr, datx, n_classes) #### MONTE CARLO DROPOUT (LAST LAYER ONLY) ####
 
 
-################## EVALUATE AVERAGE OF QIPF MODES AT EACH SAMPLE OUTPUT (sm5) ##################
-mm5 = np.zeros((len(datx), np.shape(sm55[0])[1]))
-mq5 = np.zeros((len(datx), np.shape(sm55[0])[1]))
-for i in range(len(sm55)):
-    for j in range(np.shape(sm55[0])[1]):
-        tt = np.float16(np.asarray(range(1, 5)).tolist())/10
-        tt1 = sm55[i][:, j].tolist()
-        ttt = np.asarray(sq55)
-        mm5[i, j] = np.average(tt1)
-        mq5[i, j] = ttt[i, j]
-
-
 
 pr = model.predict(datx)
 pr1 = np.zeros(len(pr))
@@ -206,14 +194,9 @@ cre1 = cre1.astype(int)
 
 
 ########## CORRELATE UNCERTAINTY MEASURES WITH WRONG PREDICTIONS TO EVALUATE UQ QUALITY ###########
-npp = [0, 1, 0]
 
-sm5 = np.sum(mm5 * npp, 1)
-
-sm5b = np.sum(mq5 * npp, 1)
-
-auc1, auc2, auc4, auc5, auc7, auc8, f11, f12, f14, f15, f17, f18, fs1, fs2, fs4, fs5, fs7, \
-fs8, cv1, cv2, cv4, cv5, cv7, cv8, prs1, prs2, prs4, prs5, prs7, prs8, sprs1, \
-sprs2, sprs4, sprs5, sprs7, sprs8, pb1, pb2, pb4, pb5, pb7, pb8, \
-f1s1, f1s2, f1s4, f1s5, f1s7, f1s8, puc1, puc2, puc4, puc5, puc7, puc8, md1, md2, md4, md5, \
-md7, md8 = perf.roc(model, datx, daty[0], sm1, sm2, sm4, sm5, sm7, sm8)
+auc1, auc2, auc4, auc7, auc8, f11, f12, f14, f17, f18, fs1, fs2, fs4, fs7, \
+fs8, cv1, cv2, cv4, cv7, cv8, prs1, prs2, prs4, prs7, prs8, sprs1, \
+sprs2, sprs4, sprs7, sprs8, pb1, pb2, pb4, pb7, pb8, \
+f1s1, f1s2, f1s4, f1s7, f1s8, puc1, puc2, puc4, puc7, puc8, md1, md2, md4, \
+md7, md8 = perf.roc(model, datx, daty[0], sm1, sm2, sm4, sm7, sm8)
