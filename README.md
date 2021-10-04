@@ -1,5 +1,5 @@
 # DL_Uncertainty_Quantification
-A simple tensorflow implementation of established Bayesian and ensemble methods for uncertainty quantification of neural networks.
+A tensorflow implementation of established Bayesian and ensemble methods for uncertainty quantification of neural networks.
 
 Methods:
  - Monte Carlo Dropout
