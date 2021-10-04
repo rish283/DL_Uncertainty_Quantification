@@ -150,8 +150,6 @@ sm4, mm4 = uncq.svi_ll(model, x_train, datx, y_train, epochs_1) #### SVI (ON LAS
 
 sm8, mm8 = uncq.ensemble(x_train, y_train, datx, epochs3, ens) #### ENSEMBLE ####
 
-sm55, sq55, hmt, tst = uncq.qipf(model, datx, daty[0], bwf, x_train, orr, ttk) #### QIPF ####
-
 sm1, mm1 = uncq.mcdrop(model, dpr1, itr, datx, n_classes) #### MONTE CARLO DROPOUT ####
 
 sm2, mm2 = uncq.mcdrop_ll(model, dpr2, itr, datx, n_classes) #### MONTE CARLO DROPOUT (LAST LAYER ONLY) ####
