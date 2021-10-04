@@ -24,5 +24,5 @@ Models:
                                                
     - ensemble: Contains 10 different models for each dataset for ensemble method implementation
 
-Data\Kuzushiji
+Data/Kuzushiji
  - Contains KMNIST train/test datasets
