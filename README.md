@@ -1,5 +1,5 @@
 # DL_Uncertainty_Quantification
-A tensorflow implementation of established Bayesian and ensemble methods for uncertainty quantification of neural networks.
+A simple tensorflow implementation of established Bayesian and ensemble methods for uncertainty quantification of neural networks.
 
 Methods:
  - Monte Carlo Dropout
@@ -13,7 +13,8 @@ Performance Metrics:
  - ROC (Receiver Operating Characteristics) - AUC
  - PR (Precision-Recall) - AUC
 
-Models:
- - LeNet (2 module)
- - VGG-3
- - ResNet-18
+Model: LeNet
+
+Datasets:
+ - MNIST
+ - K (kuzushiji) - MNIST
