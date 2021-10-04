@@ -23,3 +23,6 @@ Models:
                                                "svi_ll_...": model trained using stochastic variational inference only on last layer
                                                
     - ensemble: Contains 10 different models for each dataset for ensemble method implementation
+
+Data\Kuzushiji
+ - Contains KMNIST train/test datasets
