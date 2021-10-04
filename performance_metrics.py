@@ -3,7 +3,7 @@ import numpy as np
 
 class perf:
 
-    def roc(model, x_test, yts, sm1, sm2, sm4, sm5, sm7, sm8):
+    def roc(model, x_test, yts, sm1, sm2, sm4, sm7, sm8):
 
         pmt = model.predict(x_test)
 
@@ -126,32 +126,6 @@ class perf:
             f1s4 += 2*sd[0][u]*sd[1][u]/(sd[0][u] + sd[1][u])
         f1s4 /= len(sd[0])
 
-        fpr5, tpr5, _ = metrics.roc_curve(cre1, sm5)
-        auc5 = metrics.roc_auc_score(cre1, sm5)
-        f15 = metrics.precision_recall_curve(cre1, sm5)
-        f15 = [f15[0][0:-1], f15[1][0:-1], f15[2][0:-1]]
-        puc5 = metrics.auc(f15[1], f15[0])
-        fs5 = metrics.average_precision_score(cre1, sm5)
-        cv5 = cov(cre1, sm5)[0][1]
-        prs5, _ = per(cre1, sm5)
-        sprs5, _ = sper(cre1, sm5)
-        pb5, _ = pbs(cre1, (sm5 - np.min(sm5))/(np.max(sm5) - np.min(sm5)))
-        sa5 = (sm5 - np.min(sm5))/(np.max(sm5) - np.min(sm5))
-        # cv5 = cov(cre1, sa5)[0][1]
-
-        h51, h52 = sm5[L], sm5[~L]
-        hn = np.concatenate([h51, h52])
-        hn = (hn - np.min(hn))/(np.max(hn) - np.min(hn))
-        h51 = hn[0:len(h51)]
-        h52 = hn[len(h51): len(h52)]
-        md5 = abs(np.mean(h51) - np.mean(h52))
-
-        sd = f15
-        f1s5 = 0
-        for u in range(len(sd[0])):
-            f1s5 += 2*sd[0][u]*sd[1][u]/(sd[0][u] + sd[1][u])
-        f1s5 /= len(sd[0])
-
 
         fpr7, tpr7, _ = metrics.roc_curve(cre1, np.max(sm7) - sm7)
         auc7 = metrics.roc_auc_score(cre1, np.max(sm7) - sm7)
@@ -209,7 +183,7 @@ class perf:
         lw = 2
 
         plt.figure()
-        plt.subplot(1, 6, 1)
+        plt.subplot(1, 5, 1)
         plt.hist(h11, density=True, alpha = 0.5, color='r')
         plt.hist(h12, density=True, alpha = 0.5, color='b')
         # plt.grid(linestyle='dotted')
@@ -217,7 +191,7 @@ class perf:
         plt.title('MC-DROPOUT')
         # plt.xlabel('DETECTIONS')
         # plt.ylabel('ERROR CLASS MEAN DIFF')
-        plt.subplot(1, 6, 2)
+        plt.subplot(1, 5, 2)
         plt.hist(h21, density=True, alpha = 0.5, color='r')
         plt.hist(h22, density=True, alpha = 0.5, color='b')
         # plt.grid(linestyle='dotted')
@@ -225,7 +199,7 @@ class perf:
         plt.yticks([])
         # plt.xlabel('NOISE SEVERITY')
         # plt.ylabel('ERROR CLASS MEAN DIFF')
-        plt.subplot(1, 6, 3)
+        plt.subplot(1, 5, 3)
         plt.hist(h41, density=True, alpha = 0.5, color='r')
         plt.hist(h42, density=True, alpha = 0.5, color='b')
         # plt.grid(linestyle='dotted')
@@ -233,15 +207,7 @@ class perf:
         plt.yticks([])
         # plt.xlabel('NOISE SEVERITY')
         # plt.ylabel('ERROR CLASS MEAN DIFF')
-        plt.subplot(1, 6, 4)
-        plt.hist(h51, density=True, alpha = 0.5, color='r')
-        plt.hist(h52, density=True, alpha = 0.5, color='b')
-        # plt.grid(linestyle='dotted')
-        plt.yticks([])
-        plt.title('QIPF')
-        # plt.xlabel('NOISE SEVERITY')
-        # plt.ylabel('ERROR CLASS MEAN DIFF')
-        plt.subplot(1, 6, 5)
+        plt.subplot(1, 5, 4)
         plt.hist(h71, density=True, alpha = 0.5, color='r')
         plt.hist(h72, density=True, alpha = 0.5, color='b')
         # plt.grid(linestyle='dotted')
@@ -249,7 +215,7 @@ class perf:
         plt.title('SVI')
         # plt.xlabel('NOISE SEVERITY')
         # plt.ylabel('ERROR CLASS MEAN DIFF')
-        plt.subplot(1, 6, 6)
+        plt.subplot(1, 5, 5)
         plt.hist(h81, density=True, alpha = 0.5, color='r')
         plt.hist(h82, density=True, alpha = 0.5, color='b')
         # plt.grid(linestyle='dotted')
@@ -291,24 +257,8 @@ class perf:
         plt.xlabel('RECALL')
         plt.show()
 
-        return auc1, auc2, auc4, auc5, auc7, auc8, f11, f12, f14, f15, f17, f18, fs1, fs2, fs4, \
-               fs5, fs7, fs8, cv1, cv2, cv4, cv5, cv7, cv8, prs1, prs2, prs4, prs5, \
-               prs7, prs8, sprs1, sprs2, sprs4, sprs5, sprs7, sprs8, pb1, pb2, pb4, pb5, \
-               pb7, pb8, f1s1, f1s2, f1s4, f1s5, f1s7, f1s8, puc1, puc2, puc4, puc5, puc7, \
-               puc8, md1, md2, md4, md5, md7, md8
-
-    def brier(yt, yp):
-        # from sklearn.metrics import brier_score_loss as br
-        # return br(yt, yp)
-        from uncertainty_metrics.tensorflow.scoring_rules import brier_score
-        return brier_score(yt, yp)
-
-    def ece(yt, yp):
-        import uncertainty_metrics.numpy as um
-        ec = um.ece(yt, yp)
-        return ec
-
-    def nll(yt, yp):
-        from scipy import special
-        nl = -special.xlogy(yt, yp) - special.xlogy(1 - yt, 1 -yp)
-        return nl
+        return auc1, auc2, auc4, auc7, auc8, f11, f12, f14, f17, f18, fs1, fs2, fs4, \
+               fs7, fs8, cv1, cv2, cv4, cv7, cv8, prs1, prs2, prs4, \
+               prs7, prs8, sprs1, sprs2, sprs4, sprs7, sprs8, pb1, pb2, pb4, \
+               pb7, pb8, f1s1, f1s2, f1s4, f1s7, f1s8, puc1, puc2, puc4, puc7, \
+               puc8, md1, md2, md4, md7, md8
