@@ -1,6 +1,5 @@
 ---
-layout: page
-title: "FILE DESCRIPTIONS"
+FILE DESCRIPTIONS
 ---
 
 
