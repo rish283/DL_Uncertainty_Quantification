@@ -1,6 +1,6 @@
-====
+=
 FILE DESCIPTIONS:
-====
+=
 
 
 main_UQ.py: Main file.
