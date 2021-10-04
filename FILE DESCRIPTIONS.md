@@ -1,6 +1,7 @@
-=
-FILE DESCIPTIONS:
-=
+---
+layout: page
+title: "FILE DESCRIPTIONS"
+---
 
 
 main_UQ.py: Main file.
